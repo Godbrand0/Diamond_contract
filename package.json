@@ -1,0 +1,32 @@
+{
+  "name": "diamond-contract",
+  "version": "1.0.0",
+  "description": "ERC20 Upgradeable Diamond Contract (EIP-2535)",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network mainnet",
+    "upgrade": "hardhat run scripts/upgrade.js",
+    "node": "hardhat node",
+    "clean": "hardhat clean"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "diamond",
+    "eip-2535",
+    "upgradeable",
+    "erc20"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.17.0",
+    "dotenv": "^16.3.1"
+  },
+  "dependencies": {}
+}
