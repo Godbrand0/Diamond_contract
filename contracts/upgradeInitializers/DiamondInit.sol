@@ -11,6 +11,7 @@ contract DiamondInit {
         uint8 decimals;
         uint256 initialSupply;
         address recipient;
+        string tokenURI;
     }
 
     function init(Args memory args) external {
@@ -21,6 +22,7 @@ contract DiamondInit {
         es.decimals = args.decimals;
         es.totalSupply = args.initialSupply;
         es.balances[args.recipient] = args.initialSupply;
+        es.tokenURI = args.tokenURI;
 
         // Add more initialization as needed
     }

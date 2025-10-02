@@ -13,6 +13,7 @@ library LibERC20 {
         string name;
         string symbol;
         uint8 decimals;
+        string tokenURI; // SVG metadata URI
     }
 
     function erc20Storage() internal pure returns (ERC20Storage storage es) {
@@ -70,12 +71,35 @@ contract ERC20Facet is IERC20 {
         return true;
     }
 
-    function mint(address to, uint256 amount) external {
-        _mint(to, amount);
-    }
-
     function burn(uint256 amount) external {
         _burn(msg.sender, amount);
+    }
+
+    /// @notice Get the token URI (SVG metadata)
+    /// @return The token URI string
+    function tokenURI() external view returns (string memory) {
+        return LibERC20.erc20Storage().tokenURI;
+    }
+
+    /// @notice Set the token URI with a hardcoded SVG image
+    function setTokenURI() external {
+        // Hardcoded SVG image as base64 data URI
+        string memory svg = '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">'
+            '<defs>'
+                '<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">'
+                    '<stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />'
+                    '<stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />'
+                '</linearGradient>'
+            '</defs>'
+            '<rect width="500" height="500" fill="url(#grad1)"/>'
+            '<circle cx="250" cy="200" r="80" fill="#ffd700" stroke="#fff" stroke-width="5"/>'
+            '<text x="250" y="320" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#fff" text-anchor="middle">GBD</text>'
+            '<text x="250" y="370" font-family="Arial, sans-serif" font-size="24" fill="#fff" text-anchor="middle">Godbrand Token</text>'
+            '<path d="M 250 200 L 250 140 M 250 200 L 220 170 M 250 200 L 280 170" stroke="#fff" stroke-width="8" stroke-linecap="round"/>'
+        '</svg>';
+
+        // Convert SVG to base64 data URI
+        LibERC20.erc20Storage().tokenURI = string(abi.encodePacked("data:image/svg+xml;utf8,", svg));
     }
 
     function _transfer(address from, address to, uint256 amount) internal {
